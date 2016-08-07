@@ -1,0 +1,25 @@
+
+
+OAI:
+  metadataPrefix: marc21
+  setName:
+  resumptionToken:
+  setSpec: SWISSBIB-FULL-OAI
+  stoppageTime: 2016-05-03 22:37:33.421592
+  timestampUTC: 2016-08-01T00:31:18Z
+  url: http://aleph.unibas.ch/OAI
+  httpproxy:
+  from: 2016-08-01T00:42:42Z
+  until:
+
+Processing:
+  encodeUnicodeAsUTF8:
+  processorType: OAI
+  recordBodyRegEx: .*?(<marc:record.*?</marc:record>).*?</metadata></record>
+
+
+Kafka:
+  host: localhost:9092
+  topicToUse: OAI
+  partition: 1
+

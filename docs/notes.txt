@@ -1,0 +1,37 @@
+
+Python
+the hitchhicker guide to python
+(für Aufsetzen einer Umgebung)
+
+
+Ressourcen sickle
+https://pypi.python.org/pypi/Sickle
+https://readthedocs.org/projects/sickle/
+
+
+
+start Kafka and Zookeeper servers
+
+$ZK_RUN/zkServer.sh start
+
+
+
+$KAFKA_RUN/kafka-server-start.sh -daemon /home/swissbib/environment/tools/dataingestion/kafka/config/server.properties
+
+nur einmal
+$KAFKA_RUN/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic OAI
+
+$KAFKA_RUN/kafka-topics.sh --zookeeper localhost:2181 --describe --topic OAI
+
+
+
+
+shell producer / consumer
+$KAFKA_RUN/kafka-console-producer.sh --broker-list localhost:9092 --topic OAI
+$KAFKA_RUN/kafka-console-consumer.sh --zookeeper localhost:2181 --topic OAI --from-beginning
+
+$KAFKA_RUN/kafka-run-class.sh kafka.tools.ConsumerOffsetChecker  --topic OAI --zookeeper localhost:2181 --group testgroup
+
+//$KAFKA_HOME/bin/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list localhost:9092 --topic OAI --time -1 | awk -F ":" '{sum += $3} END {print sum}'
+$KAFKA_RUN/kafka-run-class.sh kafka.tools.DumpLogSegments
+$KAFKA_RUN/kafka-run-class.sh kafka.tools.ExportZkOffsets
