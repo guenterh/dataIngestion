@@ -17,3 +17,11 @@ benutze ich neu YAML als Konfiguration, muss ich das noch implementieren. Hier a
 -- füge allen records ein type Attribut zu damit es von Metafacture verarbeitet werden kann
 -- soll ich die namespaces aus dem raw Satz herausnehmen?
 
+
+4) Error handling wenn config file fehlt
+
+erstes Harvesting für HSG
+swissbib@ub-sbhp02:~$ $KAFKA_RUN/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list localhost:9092 --topic OAI --time -1
+OAI:0:916816
+
+

@@ -10,6 +10,11 @@ https://readthedocs.org/projects/sickle/
 
 
 
+kafka-python doc
+http://kafka-python.readthedocs.io/en/master/usage.html
+
+
+
 start Kafka and Zookeeper servers
 
 $ZK_RUN/zkServer.sh start
@@ -25,6 +30,13 @@ $KAFKA_RUN/kafka-topics.sh --zookeeper localhost:2181 --describe --topic OAI
 
 
 
+stop Kafka server
+$KAFKA_RUN/kafka-server-stop.sh
+stop Zookeeper
+$ZK_RUN/zkServer.sh stop
+
+
+
 
 shell producer / consumer
 $KAFKA_RUN/kafka-console-producer.sh --broker-list localhost:9092 --topic OAI
@@ -35,3 +47,11 @@ $KAFKA_RUN/kafka-run-class.sh kafka.tools.ConsumerOffsetChecker  --topic OAI --z
 //$KAFKA_HOME/bin/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list localhost:9092 --topic OAI --time -1 | awk -F ":" '{sum += $3} END {print sum}'
 $KAFKA_RUN/kafka-run-class.sh kafka.tools.DumpLogSegments
 $KAFKA_RUN/kafka-run-class.sh kafka.tools.ExportZkOffsets
+
+
+Abfrage des Offsets eines topics
+$KAFKA_RUN/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list localhost:9092 --topic OAI --time -1
+
+Default TTL
+7 Tage
+https://www.quora.com/When-do-the-messages-published-in-Kafka-get-deleted

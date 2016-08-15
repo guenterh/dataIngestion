@@ -23,6 +23,8 @@ if __name__ == '__main__':
     from config.appConfig import AppConfig
 
     from ingestion.oai.oai import OAI
+    from ingestion.webdav.webdav import WebDav
+    from ingestion.filePush.filepush import FilePush
 
 
     oParser = ArgumentParser()
