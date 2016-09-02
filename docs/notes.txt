@@ -33,7 +33,7 @@ $KAFKA_RUN/kafka-topics.sh --zookeeper localhost:2181 --describe --topic OAI
 stop Kafka server
 $KAFKA_RUN/kafka-server-stop.sh
 stop Zookeeper
-$ZK_RUN/zkServer.sh stop
+$ZK_RUN/zkServer.s  h stop
 
 
 
@@ -55,3 +55,10 @@ $KAFKA_RUN/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list localhost
 Default TTL
 7 Tage
 https://www.quora.com/When-do-the-messages-published-in-Kafka-get-deleted
+
+
+delete a topic
+$KAFKA_RUN/kafka-topics.sh --delete --zookeeper localhost:2181 --topic OAI
+
+Videobeispiele
+https://github.com/gwenshap/kafka-examples

@@ -9,8 +9,8 @@ OAI:
   timestampUTC: 2016-08-01T00:31:18Z
   url: http://aleph.unisg.ch/cgi-bin/OAI
   httpproxy:
-  from: 2016-08-01T00:42:42Z
-  until:
+  from: 2016-02-20T00:42:42Z
+  until: 2016-04-20T00:42:42Z
 
 Processing:
   encodeUnicodeAsUTF8:
