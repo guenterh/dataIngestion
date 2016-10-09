@@ -32,4 +32,4 @@ class BaseProcessor:
         #improved implementation for keys and partitions
         #how to use the event time?
         self.producer.send(self.appConfig.getConfig()['Kafka']['topicToUse'],value= str.encode(messageValue),
-                           key=str.enco de(key))
+                           key=str.encode(key))

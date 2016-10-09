@@ -9,8 +9,8 @@ OAI:
   timestampUTC: 2016-08-01T00:31:18Z
   url: http://aleph.unisg.ch/cgi-bin/OAI
   httpproxy:
-  from: 2016-02-20T00:42:42Z
-  until: 2016-04-20T00:42:42Z
+  from: 2016-09-11T00:00:42Z
+  until: 2016-09-13T00:00:42Z
 
 Processing:
   encodeUnicodeAsUTF8:
@@ -20,6 +20,6 @@ Processing:
 
 Kafka:
   host: localhost:9092
-  topicToUse: OAI
+  topicToUse: OAI1
   partition: 1
 

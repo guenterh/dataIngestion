@@ -33,7 +33,7 @@ $KAFKA_RUN/kafka-topics.sh --zookeeper localhost:2181 --describe --topic OAI
 stop Kafka server
 $KAFKA_RUN/kafka-server-stop.sh
 stop Zookeeper
-$ZK_RUN/zkServer.s  h stop
+$ZK_RUN/zkServer.sh  stop
 
 
 
@@ -62,3 +62,12 @@ $KAFKA_RUN/kafka-topics.sh --delete --zookeeper localhost:2181 --topic OAI
 
 Videobeispiele
 https://github.com/gwenshap/kafka-examples
+
+
+
+Flink and Kafka example
+https://www.youtube.com/watch?v=7RPQUsy4qOM
+bin/kafka-run-class.sh kafka.tools.ExportZkOffsets --group swissbib.oai --zkconnect localhost:2181 --output-file test.txt
+bin/kafka-run-class.sh kafka.tools.ImportZkOffsets  --zkconnect localhost:2181 --input-file test.txt
+mögliche tools
+https://cwiki.apache.org/confluence/display/KAFKA/System+Tools
