@@ -11,6 +11,7 @@ OAI:
   httpproxy:
   from: 2016-09-11T00:00:42Z
   until: 2016-09-13T00:00:42Z
+  granularity: YYYY-MM-DDThh:mm:ssZ
 
 Processing:
   encodeUnicodeAsUTF8:
