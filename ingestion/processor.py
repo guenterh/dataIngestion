@@ -12,17 +12,50 @@ __description__ = """
 
                     """
 from kafka import KafkaProducer
+from config.appConfig import AppConfig
 
 class BaseProcessor:
 
-    def __init__(self,appConfig=None):
+    def __init__(self,appConfig : AppConfig =None):
         self.appConfig = appConfig
         self.producer = KafkaProducer(bootstrap_servers=self.appConfig.getConfig()['Kafka']['host'])
 
 
-    def collectItems(self):
-        #standard baase method whithout implementation
-        raise Exception("no implementation in default collectItems method")
+
+    # =====================================
+    # initialization work can be done
+    # =====================================
+    def initialize(self):
+        pass
+
+    # =====================================
+    # sometimes we have to lookup for new data
+    # the mechanisms may vary from data source to data source
+    # =====================================
+    def lookUpData(self):
+        pass
+
+
+    # =====================================
+    # data could be preprocessed
+    # in times of using en event hub this could be deprecated
+    # =====================================
+    def preProcessData(self):
+        pass
+
+
+    # =====================================
+    # now process the data
+    # =====================================
+    def process(self):
+        pass
+
+    # =====================================
+    # post processing work could be done
+    # =====================================
+    def postProcessData(self):
+        pass
+
 
     def getAppConfig(self):
         return self.appConfig

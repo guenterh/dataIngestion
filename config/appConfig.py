@@ -13,27 +13,51 @@ __description__ = """
 
                     """
 
-
-from yaml import load,dump
+import yaml
+import re
+from utils.ingestUtils import IngestUtils
+import copy
 
 class AppConfig:
     def __init__(self,configpath):
         self.configPath = configpath
         self.loadConfig()
+        self.detailedGranularityPattern = re.compile('Thh:mm:ssZ', re.UNICODE | re.DOTALL | re.IGNORECASE)
 
 
 
     def loadConfig(self):
 
         try:
-            self.config = load (open(self.configPath, 'r'))
+            configHandle = open(self.configPath, 'r')
+            self.orgConfig = yaml.load (configHandle)
+            self.nextConfig = copy.deepcopy(self.orgConfig)
+            configHandle.close()
         except Exception:
             print("error trying to read config File")
             raise Exception
 
     def getConfig(self):
-        return self.config
+        return self.orgConfig
+
+    def setStartTimeInNextConfig(self):
+        granularity = self.nextConfig['OAI']['granularity']
+        if (not granularity is None and not type(granularity) is str ):
+            granularity = str(granularity)
+
+        self.nextConfig['OAI']['timestampUTC'] = IngestUtils.getCurrentUTCTimestamp(granularity)
+
+
+    def setStopTimeInNextConfig(self):
+        test = IngestUtils.getCurrentTimestamp()
+        self.nextConfig['OAI']['stoppageTime'] = IngestUtils.getCurrentTimestamp()
+
+
+    def writeConfig(self):
+        configHandle = open(self.configPath, 'w')
+        yaml.dump(self.nextConfig, configHandle,default_flow_style=False)
+        configHandle.close()
 
 
     def getProcessor(self):
-        return self.config['Processing']['processorType']
+        return self.orgConfig['Processing']['processorType']

@@ -1,7 +1,9 @@
 from sickle import Sickle
 from ingestion.processor import BaseProcessor
 from sickle.oaiexceptions import OAIError
+from config.appConfig import AppConfig
 import re
+from utils.ingestUtils import IngestUtils
 
 __author__ = 'swissbib - UB Basel, Switzerland, Guenter Hipler'
 __copyright__ = "Copyright 2016, swissbib project"
@@ -18,13 +20,15 @@ __description__ = """
 
 class OAI(BaseProcessor):
 
-    def __init__(self, appConfig=None):
+    def __init__(self, appConfig : AppConfig = None):
         BaseProcessor.__init__(self,appConfig)
         self.recordBodyRegEx = re.compile(self.appConfig.getConfig()['Processing']['recordBodyRegEx'],
                                                     re.UNICODE | re.DOTALL | re.IGNORECASE)
+        self.appConfig.setStartTimeInNextConfig()
 
 
-    def collectItems(self):
+
+    def process(self):
 
         sickle = Sickle(self.appConfig.getConfig()['OAI']['url'])
         dic = {
@@ -32,11 +36,12 @@ class OAI(BaseProcessor):
             'setSpec': self.appConfig.getConfig()['OAI']['setSpec']
         }
 
-        if not self.appConfig.getConfig()['OAI']['from'] is None:
-            dic['from'] = '{:%Y-%m-%dT%H:%M:%SZ}'.format(self.appConfig.getConfig()['OAI']['from'])
-
+        if not self.appConfig.getConfig()['OAI']['timestampUTC'] is None:
+            dic['from'] = IngestUtils.transformFromUntil(self.appConfig.getConfig()['OAI']['timestampUTC'],
+                                                         self.appConfig.getConfig()['OAI']['granularity'])
         if not self.appConfig.getConfig()['OAI']['until'] is None:
-            dic['until'] = '{:%Y-%m-%dT%H:%M:%SZ}'.format(self.appConfig.getConfig()['OAI']['until'])
+            dic['until'] = IngestUtils.transformFromUntil(self.appConfig.getConfig()['OAI']['until'],
+                                                          self.appConfig.getConfig()['OAI']['granularity'])
 
 
         try:
@@ -69,4 +74,7 @@ class OAI(BaseProcessor):
             print(baseException)
 
 
+    def postProcessData(self):
+        self.appConfig.setStopTimeInNextConfig()
+        self.appConfig.writeConfig()
 

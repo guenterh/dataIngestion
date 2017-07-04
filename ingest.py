@@ -18,10 +18,9 @@ if __name__ == '__main__':
     __description__ = """
 
                         """
-
     from argparse import ArgumentParser
     from config.appConfig import AppConfig
-
+    #client could be one of these types
     from ingestion.oai.oai import OAI
     from ingestion.webdav.webdav import WebDav
     from ingestion.filePush.filepush import FilePush
@@ -31,9 +30,13 @@ if __name__ == '__main__':
     oParser.add_argument("-c", "--config", dest="confFile")
     args = oParser.parse_args()
 
-
     appConfig = AppConfig(args.confFile)
+
     client = globals()[appConfig.getProcessor()](appConfig)
-    client.collectItems()
+    client.initialize()
+    client.lookUpData()
+    client.preProcessData()
+    client.process()
+    client.postProcessData()
 
 

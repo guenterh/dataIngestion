@@ -1,18 +1,18 @@
 Kafka:
   host: localhost:9092
   partition: 1
-  topicToUse: HSG1
+  topicToUse: IDSBB
 OAI:
   granularity: YYYY-MM-DDThh:mm:ssZ
   httpproxy: null
   metadataPrefix: marc21
   resumptionToken: null
   setName: null
-  setSpec: SWISSBIB-FULL-HSB01
+  setSpec: SWISSBIB-FULL-OAI
   stoppageTime: 2017-07-04T22:3:43Z
-  timestampUTC: 2017-07-04T20:1:46Z
+  timestampUTC: 2017-07-04T12:1:46Z
   until: null
-  url: http://aleph.unisg.ch/cgi-bin/OAI
+  url: http://aleph.unibas.ch/OAI
 Processing:
   encodeUnicodeAsUTF8: null
   processorType: OAI
