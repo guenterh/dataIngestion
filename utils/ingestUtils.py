@@ -38,7 +38,7 @@ class IngestUtils():
         else:
             if (type(value) is str):
                 return '{:%Y-%m-%d}'.format(
-                    datetime.strptime(value, '%Y-%m-%dT'))
+                    datetime.strptime(value, '%Y-%m-%d'))
             else:
                 return '{:%Y-%m-%d}'.format(
                     value, '%Y-%m-%d')

@@ -21,7 +21,7 @@ $ZK_RUN/zkServer.sh start
 
 
 
-$KAFKA_RUN/kafka-server-start.sh -daemon /home/swissbib/environment/tools/dataingestion/kafka/config/server.properties
+$KAFKA_RUN/kafka-server-start.sh -daemon $KAFKA_HOME/config/server.properties
 
 nur einmal
 $KAFKA_RUN/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic OAI

@@ -1,18 +1,18 @@
 Kafka:
   host: localhost:9092
   partition: 1
-  topicToUse: IDSBB
+  topicToUse: SNL
 OAI:
-  granularity: YYYY-MM-DDThh:mm:ssZ
+  granularity: YYYY-MM-DD
   httpproxy: null
-  metadataPrefix: marc21
+  metadataPrefix: marcxml
   resumptionToken: null
   setName: null
-  setSpec: SWISSBIB-FULL-OAI
-  stoppageTime: '2017-07-06T19:58:54Z'
-  timestampUTC: '2017-07-06T17:58:54Z'
+  setSpec: AllBib
+  stoppageTime: '2017-07-09T20:36:55Z'
+  timestampUTC: '2017-07-01'
   until: null
-  url: http://alephtest.unibas.ch/OAI
+  url: http://opac.admin.ch:6080/cgi-bin/nboai/VTLS/Vortex.pl
 Processing:
   encodeUnicodeAsUTF8: null
   processorType: OAI
