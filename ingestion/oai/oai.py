@@ -35,12 +35,12 @@ class OAI(BaseProcessor):
         try:
 
             sickle = Sickle(self.appConfig.getConfig()['OAI']['url'])
-            print(sickle.endpoint)
-            dic = {
-                'metadataPrefix': self.appConfig.getConfig()['OAI']['metadataPrefix'],
-                'set': self.appConfig.getConfig()['OAI']['setSpec']
-            }
-
+            #print(sickle.endpoint)
+            dic = {}
+            if not self.appConfig.getConfig()['OAI']['metadataPrefix'] is None:
+                dic['metadataPrefix'] =  self.appConfig.getConfig()['OAI']['metadataPrefix']
+            if not self.appConfig.getConfig()['OAI']['setSpec'] is None:
+                dic['set'] = self.appConfig.getConfig()['OAI']['setSpec']
             if not self.appConfig.getConfig()['OAI']['timestampUTC'] is None:
                 dic['from'] = IngestUtils.transformFromUntil(self.appConfig.getConfig()['OAI']['timestampUTC'],
                                                              self.appConfig.getConfig()['OAI']['granularity'])

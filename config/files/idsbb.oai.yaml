@@ -1,5 +1,5 @@
 Kafka:
-  host: localhost:9092
+  host: sb-uwf3:7078
   partition: 1
   topicToUse: IDSBB
 OAI:

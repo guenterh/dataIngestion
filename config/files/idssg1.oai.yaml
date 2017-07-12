@@ -1,5 +1,5 @@
 Kafka:
-  host: sb-uwf3:9092
+  host: sb-uwf3:7078
   partition: 0
   topicToUse: HSG1
 OAI:

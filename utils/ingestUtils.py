@@ -15,6 +15,7 @@ class IngestUtils():
             nTList = [str(cTimeUTC.date()),"T",str(cTimeUTC.hour),":",str(cTimeUTC.minute),":",str(cTimeUTC.second),"Z"]
             return "".join(nTList)
         else:
+            #granularity without time => next from should be the current day (think about it again especially with UTC)
             return datetime.utcnow().strftime("%Y-%m-%d")
 
 

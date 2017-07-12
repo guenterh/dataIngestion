@@ -25,3 +25,8 @@ swissbib@ub-sbhp02:~$ $KAFKA_RUN/kafka-run-class.sh kafka.tools.GetOffsetShell -
 OAI:0:916816
 
 
+5) Leere Liste (keine Treffer) einer OAI Abfrage führt zu Fehler, den muss man abfangen und loggen
+
+6) wenn man schreiben konnte und dann ein Fehler auftritt der zum Abbruch führt sollte dies geloggt werden
+
+

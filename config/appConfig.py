@@ -49,7 +49,7 @@ class AppConfig:
 
 
     def setStopTimeInNextConfig(self):
-        test = IngestUtils.getCurrentTimestamp()
+
         self.nextConfig['OAI']['stoppageTime'] = IngestUtils.getCurrentTimestamp()
 
 
