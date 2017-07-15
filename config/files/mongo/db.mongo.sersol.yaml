@@ -1,7 +1,7 @@
 DB:
   dbname: nativeSources
   collection:
-    name : sourceNEBIS
+    name : sourceSersol
     docfield: record
 
 HOST:
@@ -13,10 +13,10 @@ HOST:
 Kafka:
   host: localhost:9092
   partition: 0
-  topicToUse: NEBISMongo
+  topicToUse: SersolMongo
 Processing:
-  recordBodyRegEx: .*?(<marc:record.*?</marc:record>).*?</metadata></record>
-  identifierRegEx: .*?<identifier>(.*?)</identifier>.*
+  recordBodyRegEx: (.*)
+  identifierRegEx: .*?<controlfield tag="001">(.*?)</controlfield>.*
   eventTimeRegEx: .*?<datestamp>(.*?)</datestamp>.*
   mfCompatibleBeingReplaced: .*?<marc:record.*?>
   cleanUpType: NebisCleanUp

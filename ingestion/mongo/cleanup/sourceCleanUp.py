@@ -44,6 +44,7 @@ class DefaultCleanUp:
                 print("record \n {RECORD} \n does not match regex".format(RECORD=textDoc))
         else:
             print("record  {ID} deleted".format(ID=doc['_id']))
+            return None
 
 class NebisCleanUp(DefaultCleanUp):
 
@@ -66,3 +67,45 @@ class NebisCleanUp(DefaultCleanUp):
                 print("record \n {RECORD} \n does not match regex".format(RECORD=textDoc))
         else:
             print("record  {ID} deleted".format(ID=doc['_id']))
+            return None
+
+
+class ReroCleanUp(DefaultCleanUp):
+
+
+    def cleanUp(self, doc):
+        status = doc['status']
+        if not status == "deleted" and not status == "newdeleted":
+            textDoc = zlib.decompress(doc[self.currentRecordField]).decode("utf-8")
+
+            sIdentifier = self.regexIdentifier.search(textDoc)
+            sBody = self.regexRecordBody.search(textDoc)
+            if sBody and sIdentifier :
+                body = ' '.join(sBody.group(1).splitlines())
+                identifier = "".join(['(RERO)',sIdentifier.group(1)])
+                contentSingleRecord = re.sub("<marc:record.*?>", self.replacement, body)
+                tLine = re.sub('marc:', repl='', string=contentSingleRecord)
+
+                return {'doc': tLine, 'key' : identifier, 'eventTime' : None }
+            else:
+                print("record \n {RECORD} \n does not match regex".format(RECORD=textDoc))
+        else:
+            print("record  {ID} deleted".format(ID=doc['_id']))
+            return None
+
+
+
+
+class OAIDC(DefaultCleanUp):
+
+    def cleanUp(self, doc):
+        #todo OAI-DC Decoder for Metafacture
+        return None
+
+
+
+class Jats(DefaultCleanUp):
+
+    def cleanUp(self, doc):
+        #todo Jats Decoder for Metafacture
+        return None

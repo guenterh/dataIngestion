@@ -1,8 +1,7 @@
 from ingestion.processor import BaseProcessor
 from config.appConfig import AppConfig
-import re, zlib
 from pymongo import MongoClient
-from ingestion.mongo.cleanup.sourceCleanUp import DefaultCleanUp,NebisCleanUp
+from ingestion.mongo.cleanup.sourceCleanUp import DefaultCleanUp,NebisCleanUp, OAIDC, Jats, ReroCleanUp
 
 __author__ = 'swissbib - UB Basel, Switzerland, Guenter Hipler'
 __copyright__ = "Copyright 2016, swissbib project"
@@ -26,23 +25,6 @@ class MongoSource(BaseProcessor):
 
     def initialize(self):
         self.mongoClient = MongoClientWrapper(self.appConfig)
-        self.currentRecordField = self.appConfig.getConfig()['DB']['collection']['docfield']
-
-        self.regexRecordBody = re.compile(self.appConfig.getConfig()['Processing']['recordBodyRegEx'],
-                   re.UNICODE | re.DOTALL | re.IGNORECASE)
-        self.regexIdentifier = re.compile(self.appConfig.getConfig()['Processing']['identifierRegEx'],
-                   re.UNICODE | re.DOTALL | re.IGNORECASE)
-        self.regexEventTime = re.compile(self.appConfig.getConfig()['Processing']['eventTimeRegEx'],
-                   re.UNICODE | re.DOTALL | re.IGNORECASE)
-
-        self.regExMFBeingReplaced = re.compile(self.appConfig.getConfig()['Processing']['mfCompatibleBeingReplaced'],
-                   re.UNICODE | re.DOTALL | re.IGNORECASE)
-
-        self.regExMarcStartTag = re.compile('marc:',
-                   re.UNICODE | re.DOTALL | re.IGNORECASE)
-
-        #self.replacement = '<marc:record type="Bibliographic" xmlns:marc="http://www.loc.gov/MARC21/slim" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.loc.gov/MARC21/slim http://www.loc.gov/standards/marcxml/schema/MARC21slim.xsd">'
-        self.replacement = '<marc:record type="Bibliographic">'
 
     def process(self):
         if not self.mongoClient is None:
@@ -54,10 +36,10 @@ class MongoSource(BaseProcessor):
                 try:
                     cleanResource = cleaner.cleanUp(doc)
 
-
-                    self.produceKafkaMessage(messageValue=cleanResource['doc'],
-                                             key=cleanResource['key'],
-                                             eventTime=cleanResource['eventTime'])
+                    if not cleanResource is None:
+                        self.produceKafkaMessage(messageValue=cleanResource['doc'],
+                                                 key=cleanResource['key'],
+                                                 eventTime=cleanResource['eventTime'])
 
                 except Exception as pythonBaseException:
                     print(pythonBaseException)
