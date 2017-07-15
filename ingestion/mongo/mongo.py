@@ -1,7 +1,8 @@
 from ingestion.processor import BaseProcessor
 from config.appConfig import AppConfig
-import re, zlib, sys
+import re, zlib
 from pymongo import MongoClient
+from ingestion.mongo.cleanup.sourceCleanUp import DefaultCleanUp,NebisCleanUp
 
 __author__ = 'swissbib - UB Basel, Switzerland, Guenter Hipler'
 __copyright__ = "Copyright 2016, swissbib project"
@@ -45,29 +46,21 @@ class MongoSource(BaseProcessor):
 
     def process(self):
         if not self.mongoClient is None:
+
+            cleaner = globals()[self.appConfig.getConfig()['Processing']['cleanUpType']](self.appConfig.getConfig())
+
             for doc in  self.mongoClient.getAllDocsInCollection():
-                status = doc['status']
-                if not status == "deleted" and not status == "newdeleted":
-                    textDoc = zlib.decompress(doc[self.currentRecordField]).decode("utf-8")
 
-                    sIdentifier = self.regexIdentifier.search(textDoc)
-                    sEventtime = self.regexEventTime.search(textDoc)
-                    sBody = self.regexRecordBody.search(textDoc)
-                    if sBody and sIdentifier and sEventtime:
+                try:
+                    cleanResource = cleaner.cleanUp(doc)
 
-                        body = ' '.join(sBody.group(1).splitlines())
-                        identifier = sIdentifier.group(1)
-                        eventTime = sEventtime.group(1)
-                        contentSingleRecord = re.sub("<marc:record.*?>", self.replacement,body )
-                        #tLine = re.sub(pattern=self.regExMFBeingReplaced, repl=self.replacement,string=body)
-                        tLine = re.sub('marc:', repl='',string=contentSingleRecord)
-                        self.produceKafkaMessage(messageValue=tLine,
-                                                 key=identifier,
-                                                 eventTime=eventTime)
-                    else:
-                        #todo: implement decent logging framework
-                        print("record \n {RECORD} \n does not match regex".format(RECORD=textDoc))
 
+                    self.produceKafkaMessage(messageValue=cleanResource['doc'],
+                                             key=cleanResource['key'],
+                                             eventTime=cleanResource['eventTime'])
+
+                except Exception as pythonBaseException:
+                    print(pythonBaseException)
 
 
     def postProcessData(self):

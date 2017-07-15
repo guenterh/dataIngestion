@@ -19,4 +19,5 @@ Processing:
   identifierRegEx: .*?<identifier>(.*?)</identifier>.*
   eventTimeRegEx: .*?<datestamp>(.*?)</datestamp>.*
   mfCompatibleBeingReplaced: .*?<marc:record.*?>
+  cleanUpType: DefaultCleanUp
 
