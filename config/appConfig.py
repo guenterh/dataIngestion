@@ -30,6 +30,39 @@ class AppConfig:
 
         try:
             configHandle = open(self.configPath, 'r')
+            self.config = yaml.load (configHandle)
+            configHandle.close()
+        except Exception:
+            print("error trying to read config File")
+            raise Exception
+
+    def getConfig(self):
+        return self.config
+
+
+
+
+    def writeConfig(self):
+        configHandle = open(self.configPath, 'w')
+        yaml.dump(self.config, configHandle,default_flow_style=False)
+        configHandle.close()
+
+
+    def getProcessor(self):
+        return self.config['Processing']['processorType']
+
+
+
+class OAIConfig(AppConfig):
+
+    def __init__(self,configpath):
+        super().__init__(configpath=configpath)
+        self.detailedGranularityPattern = re.compile('Thh:mm:ssZ', re.UNICODE | re.DOTALL | re.IGNORECASE)
+
+    def loadConfig(self):
+
+        try:
+            configHandle = open(self.configPath, 'r')
             self.orgConfig = yaml.load (configHandle)
             self.nextConfig = copy.deepcopy(self.orgConfig)
             configHandle.close()
@@ -37,8 +70,7 @@ class AppConfig:
             print("error trying to read config File")
             raise Exception
 
-    def getConfig(self):
-        return self.orgConfig
+
 
     def setStartTimeInNextConfig(self):
         granularity = self.nextConfig['OAI']['granularity']
@@ -59,5 +91,7 @@ class AppConfig:
         configHandle.close()
 
 
-    def getProcessor(self):
-        return self.orgConfig['Processing']['processorType']
+class MongoConfig(AppConfig):
+    def __init__(self,configpath):
+        super().__init__(configpath=configpath)
+

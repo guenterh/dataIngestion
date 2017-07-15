@@ -1,7 +1,8 @@
 # coding: utf-8
 
 """
-bootstrap mechanism to start the various ingestion types
+Kappa procedure for Mongo sources
+bulk load of mongo data into Kafka cluster as basis for stream processing
 """
 
 
@@ -19,24 +20,23 @@ if __name__ == '__main__':
 
                         """
     from argparse import ArgumentParser
-    from config.appConfig import OAIConfig
+    from config.appConfig import MongoConfig
     #client could be one of these types
     from ingestion.oai.oai import OAI
     from ingestion.webdav.webdav import WebDav
     from ingestion.filePush.filepush import FilePush
+    from ingestion.mongo.mongo import MongoSource
 
 
     oParser = ArgumentParser()
     oParser.add_argument("-c", "--config", dest="confFile")
     args = oParser.parse_args()
 
-    appConfig = OAIConfig(args.confFile)
+    appConfig = MongoConfig(args.confFile)
 
-    client = globals()[appConfig.getProcessor()](appConfig)
+    client = MongoSource(appConfig)
     client.initialize()
     client.lookUpData()
     client.preProcessData()
     client.process()
     client.postProcessData()
-
-

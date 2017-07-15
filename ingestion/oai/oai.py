@@ -88,5 +88,5 @@ class OAI(BaseProcessor):
 
     def postProcessData(self):
         self.appConfig.setStopTimeInNextConfig()
-        self.appConfig.writeConfig()
+        super().postProcessData()
 

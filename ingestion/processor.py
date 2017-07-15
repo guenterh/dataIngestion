@@ -54,7 +54,7 @@ class BaseProcessor:
     # post processing work could be done
     # =====================================
     def postProcessData(self):
-        pass
+        self.appConfig.writeConfig()
 
 
     def getAppConfig(self):

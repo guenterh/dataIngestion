@@ -52,13 +52,16 @@ $KAFKA_RUN/kafka-run-class.sh kafka.tools.ExportZkOffsets
 Abfrage des Offsets eines topics
 $KAFKA_RUN/kafka-run-class.sh kafka.tools.GetOffsetShell --broker-list localhost:9092 --topic OAI --time -1
 
+Anzeige der vorhandenen Topics
+$KAFKA_HOME/bin/kafka-topics.sh  --zookeeper localhost:2181 --list
+
 Default TTL
 7 Tage
 https://www.quora.com/When-do-the-messages-published-in-Kafka-get-deleted
 
 
 delete a topic
-$KAFKA_RUN/kafka-topics.sh --delete --zookeeper localhost:2181 --topic OAI
+$KAFKA_RUN/kafka-topics.sh --delete --zookeeper localhost:2181 --topic LIBIBMongo
 
 Videobeispiele
 https://github.com/gwenshap/kafka-examples
@@ -71,3 +74,8 @@ bin/kafka-run-class.sh kafka.tools.ExportZkOffsets --group swissbib.oai --zkconn
 bin/kafka-run-class.sh kafka.tools.ImportZkOffsets  --zkconnect localhost:2181 --input-file test.txt
 mögliche tools
 https://cwiki.apache.org/confluence/display/KAFKA/System+Tools
+
+
+Hintergrund: https://github.com/confluentinc/confluent-kafka-python/issues/11
+https://www.virtualbox.org/wiki/Linux_Downloads
+https://tecadmin.net/install-oracle-virtualbox-on-ubuntu/
