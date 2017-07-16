@@ -4,7 +4,7 @@
 Kappa procedure for Mongo sources
 bulk load of mongo data into Kafka cluster as basis for stream processing
 """
-
+from datetime import datetime
 
 if __name__ == '__main__':
 
@@ -34,9 +34,12 @@ if __name__ == '__main__':
 
     appConfig = MongoConfig(args.confFile)
 
+    print("".join(["job ",args.confFile, " started: ",'{:%Y-%m-%dT%H:%M:%SZ}'.format(datetime.now(), '%Y-%m-%dT%H:%M:%SZ')]))
+
     client = MongoSource(appConfig)
     client.initialize()
     client.lookUpData()
     client.preProcessData()
     client.process()
     client.postProcessData()
+    print("".join(["job ",args.confFile, " finished: ",'{:%Y-%m-%dT%H:%M:%SZ}'.format(datetime.now(), '%Y-%m-%dT%H:%M:%SZ')]))

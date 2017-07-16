@@ -43,7 +43,7 @@ class DefaultCleanUp:
                 # todo: implement decent logging framework
                 print("record \n {RECORD} \n does not match regex".format(RECORD=textDoc))
         else:
-            print("record  {ID} deleted".format(ID=doc['_id']))
+            #print("record  {ID} deleted".format(ID=doc['_id']))
             return None
 
 class NebisCleanUp(DefaultCleanUp):
@@ -66,7 +66,7 @@ class NebisCleanUp(DefaultCleanUp):
             else:
                 print("record \n {RECORD} \n does not match regex".format(RECORD=textDoc))
         else:
-            print("record  {ID} deleted".format(ID=doc['_id']))
+            #print("record  {ID} deleted".format(ID=doc['_id']))
             return None
 
 
